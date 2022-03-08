@@ -1,13 +1,26 @@
-from . import db
-from flask_script import Manager, Server
-from app.models import User
 
-# class user
+from . import db
+
+
 
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255))
+    firstname = db.Column (db.String(255))
+    roles_id=db.Column(db.Integer,db.Foreign_key('roles.id'))
     
     def __repr__(self):
         return f'User {self.username}'
+    
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User',backref = 'role',lazy="dynamic")
+
+
+    def __repr__(self):
+        return f'User {self.name}'
