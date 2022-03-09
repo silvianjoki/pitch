@@ -2,6 +2,8 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 from flask_login import login_required, current_user, login_user, logout_user
 from ..models import User, Role
+from .forms import ReviewForm,UpdateProfile
+from .. import db
 
 
 @main.route('/user/<uname>')
