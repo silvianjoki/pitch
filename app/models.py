@@ -7,6 +7,8 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255))
+    email = db.Column(db.String(120), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
     roles_id=db.Column(db.Integer,db.Foreign_key('roles.id'))
     pass_secure = db.Column(db.String(255))
     
@@ -16,7 +18,6 @@ class User(db.Model):
 
 class Role(db.Model):
     __tablename__ = 'roles'
-
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255))
     users = db.relationship('User',backref = 'role',lazy="dynamic")
