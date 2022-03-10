@@ -1,3 +1,4 @@
+from turtle import title
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
@@ -34,11 +35,40 @@ class User(UserMixin,db.Model):
     def __repr__(self): 
         return f'USER {self.username}'
 
-class Role(db.Model):
-    __tablename__ = 'roles'
+class Pitch(db.Model):
+    __tablename__ = 'pitches'
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Column(db.String(255))
-    users = db.relationship('User',backref = 'role',lazy="dynamic")
+    title = db.Column(db.String())
+    pitch_content = db.Column(db.String())
+    upvotes = db.Column(db.Integer)
+    downvotes = db.Column(db.Integer)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    category_id= db.Column(db.Integer, db.ForeignKey('categories_id'))
+    comments = db.relationship("Comment", backref ='pitch', lazy = "dynamic")
+
+
+    def save_pitch(self):
+            db.session.add(self)
+            db.session.commit()
+
+    @classmethod
+    def get_user_pitch(cls,id):
+            user_pitches = Pitch.query.filter_by(pitcher_id = id).order_by(Pitch.posted.desc())
+            return user_pitches
+
+    @classmethod
+    def get_category_pitch(cls,id):
+            category_pitches = Pitch.query.filter_by(category_id = id).order_by(Pitch.posted.desc())
+            return category_pitches
+
+    @classmethod
+    def get_pitch_id(cls,id):
+            pitch_id = Pitch.query.filter_by(id = id).order_by(Pitch.id.desc()) 
+            return pitch_id
+
+
+    def __repr__(self):
+            return f"Pitch {self.title}"
 
     def __repr__(self):
         return f'User {self.name}'
