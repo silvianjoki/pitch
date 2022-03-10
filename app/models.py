@@ -6,14 +6,18 @@ from . import login_manager
 from datetime import datetime
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(255))
     email = db.Column(db.String(120), index=True, unique=True)  
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    comments = db.relationship('Comment', backref='author', lazy='dynamic')
     pass_secure = db.Column(db.String(255))
     pitches = db.relationship('Pitch',backref = 'pitcher',lazy = "dynamic")
 
@@ -35,7 +39,7 @@ class User(UserMixin,db.Model):
     def __repr__(self): 
         return f'USER {self.username}'
 
-class Pitch(db.Model):
+class Pitches(db.Model):
     __tablename__ = 'pitches'
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String())
@@ -47,64 +51,62 @@ class Pitch(db.Model):
     comments = db.relationship("Comment", backref ='pitch', lazy = "dynamic")
 
 
-    def save_pitch(self):
+    def save_pitches(self):
             db.session.add(self)
             db.session.commit()
 
     @classmethod
-    def get_user_pitch(cls,id):
-            user_pitches = Pitch.query.filter_by(pitcher_id = id).order_by(Pitch.posted.desc())
-            return user_pitches
+    def get_pitches(cls,id):
+            pitches = Pitches.query.filter_by(pitcher_id = id).order_by(Pitches.posted.desc())
+            return pitches
 
     @classmethod
     def get_category_pitch(cls,id):
-            category_pitches = Pitch.query.filter_by(category_id = id).order_by(Pitch.posted.desc())
+            category_pitches = Pitches.query.filter_by(category_id = id).order_by(Pitches.posted.desc())
             return category_pitches
 
     @classmethod
     def get_pitch_id(cls,id):
-            pitch_id = Pitch.query.filter_by(id = id).order_by(Pitch.id.desc()) 
+            pitch_id = Pitches.query.filter_by(id = id).order_by(Pitches.id.desc()) 
             return pitch_id
 
 
     def __repr__(self):
-            return f"Pitch {self.title}"
+            return f"Pitches {self.title}"
 
     def __repr__(self):
         return f'User {self.name}'
     
     
-class Review(db.Model):
-    __tablename__ = 'reviews'
-    id = db.Column(db.Integer,primary_key = True)
-    movie_id = db.Column(db.Integer)
-    movie_title = db.Column(db.String)
-    image_path = db.Column(db.String)
-    movie_review = db.Column(db.String)
-    posted = db.Column(db.DateTime,default=datetime.utcnow)
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+class Categories(db.Model):
+    __tablename__ = 'categories'
     
-    def save_review(self):
+    id = db.Column(db.Integer, primary_key = True)
+    categories_name = db.Column(db.String(255))
+    pitches =db.relationship('Pitces', backref='category', lazy='dynamic')
+
+    @classmethod
+    def get_categories_name(cls, categories_name):
+        category= Categories.query.filter_by(categories_name = categories_name).first()
+        return category   
+    
+    def __repr__(self):
+        return f'Categories {self.categories_name} '     
+
+
+class Comments(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Colum (db.String())
+    pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    
+    def save_comments(self):
         db.session.add(self)
         db.session.commit()
-
-@classmethod
-def get_reviews(cls,id):
-    reviews = Review.query.filter_by(movie_id=id).all()
-    return reviews
-
-@property
-def password(self):
-    raise AttributeError('You cannot read the password attribute')
-
-@password.setter
-def password(self, password):
-    self.pass_secure = generate_password_hash(password)
+        
+    @classmethod
+    def get_comments(cls,id):
+        comments = Comments.query.filter_by(pitch_id=id).all()
+        return comments
 
 
-def verify_password(self,password):
-    return check_password_hash(self.pass_secure,password)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
