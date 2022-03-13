@@ -1,9 +1,8 @@
-from turtle import title
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
-# from datetime import datetime
+
 
 
 @login_manager.user_loader
@@ -80,7 +79,6 @@ class Pitches(db.Model):
     
 class Categories(db.Model):
     __tablename__ = 'categories'
-    
     id = db.Column(db.Integer, primary_key = True)
     categories_name = db.Column(db.String(255))
     pitches =db.relationship('Pitces', backref='category', lazy='dynamic')

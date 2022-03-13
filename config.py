@@ -10,14 +10,12 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://silvianjoki:password@localhost/pitchy'
+    SECRET_KEY='essentialism'
 
-    # @staticmethod
-    # def init_app(app):
-    #     pass
 
 class ProdConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://silvianjoki:password@localhost/pitchy'
-    # pass
+    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://silvianjoki:password@localhost/pitchy'
+    pass
 
 
 class DevConfig(Config):
