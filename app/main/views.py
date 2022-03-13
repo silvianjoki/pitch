@@ -1,14 +1,22 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from flask_login import login_required, current_user, login_user, logout_user
-from ..models import User, Categories, Pitches, Comments
+from ..models import User, Pitches, Comments
 from .forms import UpdateProfile
 from .. import db,photos
 
 
 @main.route('/')
-def home():
+def index():
     return render_template('index.html')
+
+@main.route('/home', methods=['Get','Post'])
+@login_required
+def home():
+    return render_template('home.html')
+
+
+
 
 @main.route('/user/<uname>')
 def profile(uname):

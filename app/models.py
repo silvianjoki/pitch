@@ -1,7 +1,8 @@
-from . import db
+from unicodedata import category
+from . import db, login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
-from . import login_manager
+
 
 
 
@@ -42,54 +43,22 @@ class Pitches(db.Model):
     __tablename__ = 'pitches'
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String())
+    category = db.Column(db.String())
     pitch_content = db.Column(db.String())
     upvotes = db.Column(db.Integer)
     downvotes = db.Column(db.Integer)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    categories_id= db.Column(db.Integer, db.ForeignKey('categories.id'))
     comments = db.relationship("Comment", backref ='pitch', lazy = "dynamic")
-
-
+    
     def save_pitches(self):
             db.session.add(self)
             db.session.commit()
 
     @classmethod
     def get_pitches(cls,id):
-            pitches = Pitches.query.filter_by(pitcher_id = id).order_by(Pitches.posted.desc())
+            pitches = Pitches.query.filter_by(category=category).all()
             return pitches
 
-    @classmethod
-    def get_category_pitch(cls,id):
-            category_pitches = Pitches.query.filter_by(category_id = id).order_by(Pitches.posted.desc())
-            return category_pitches
-
-    @classmethod
-    def get_pitch_id(cls,id):
-            pitch_id = Pitches.query.filter_by(id = id).order_by(Pitches.id.desc()) 
-            return pitch_id
-
-
-    def __repr__(self):
-            return f"Pitches {self.title}"
-
-    def __repr__(self):
-        return f'User {self.name}'
-    
-    
-class Categories(db.Model):
-    __tablename__ = 'categories'
-    id = db.Column(db.Integer, primary_key = True)
-    categories_name = db.Column(db.String(255))
-    pitches =db.relationship('Pitces', backref='category', lazy='dynamic')
-
-    @classmethod
-    def get_categories_name(cls, categories_name):
-        category= Categories.query.filter_by(categories_name = categories_name).first()
-        return category   
-    
-    def __repr__(self):
-        return f'Categories {self.categories_name}'     
 
 
 class Comments(db.Model):
@@ -103,8 +72,11 @@ class Comments(db.Model):
         db.session.commit()
         
     @classmethod
-    def get_comments(cls,id):
-        comments = Comments.query.filter_by(pitch_id=id).all()
+    def get_comments(cls,pitch_id):
+        comments = Comments.query.filter_by(pitch_id=pitch_id).all()
         return comments
+    
+
+
 
 
