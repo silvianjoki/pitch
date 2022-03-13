@@ -17,9 +17,13 @@ def register():
         user = User(email = form.email.data, username = form.username.data,password = form.password.data)
         db.session.add(user)
         db.session.commit()
+        
+        mail_message('Welcome to the Pitch app', 'email/welcome_user', user.email,user=user)
+        
         return redirect(url_for('auth.login'))
         title = "New Account"
     return render_template('auth/register.html',registration_form = form)
+
 
 
 # login path
@@ -34,8 +38,11 @@ def login():
 
         flash('Invalid username or Password')
 
-    title = "pitchy login"
+    title = "Pitch login"
     return render_template('auth/login.html',login_form = login_form,title=title)
+
+
+
 
 
 # logout path

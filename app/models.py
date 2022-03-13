@@ -2,6 +2,8 @@ from unicodedata import category
 from . import db, login_manager
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
+# from datetime import datetime
+
 
 
 
@@ -66,6 +68,8 @@ class Comments(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column (db.String())
     pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    
+    # posted = db.Column(db.DateTime,default=datetime.utcnow)
     
     def save_comments(self):
         db.session.add(self)
