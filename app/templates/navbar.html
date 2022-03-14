@@ -1,16 +1,18 @@
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Pitch</a> 
+        {% if current_user.is_authenticated %}
+        <li style="color:black;padding:15px;">{{current_user.username}}</li>
+        <a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
+        <a href="{{url_for('main.profile',uname=current_user.username)}}">Add Pitch</a>
+        <a href="{{url_for('auth.logout')}}">Sign out</a>
+        {% else %}
+        <a href="{{url_for('auth.login')}}">Sign in</a>
+        {%endif%}
+    </div>
+</nav>
 
 
-<ul class="nav navbar-nav navbar-right">
-
-    <li><a href="/pitch">Pitch</a></li>
-    {% if current_user.is_authenticated %}
-    <li style="color:white;padding:15px;">{{current_user.username}}</li>
-    <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>
-    <li><a href="{{url_for('auth.logout')}}">Sign out</a></li>
-    {% else %}
-    <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-    {%endif%}
-</ul>
 
 
 
