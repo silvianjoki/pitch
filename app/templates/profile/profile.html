@@ -7,7 +7,7 @@
 
             <!--Displaying user bio-->
             {% if user.bio %}
-            <p> {{user.bio}}</p>
+            <p style="align-content: center; font-family: 'The Dongle';"> {{user.bio}}</p>
             {%else%}
             <p> {{user.username| capitalize}} You have no bio</p>
             {% endif %} {% if user == current_user %}

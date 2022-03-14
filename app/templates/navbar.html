@@ -2,9 +2,8 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Pitch</a> 
         {% if current_user.is_authenticated %}
-        <li style="color:black;padding:15px;">{{current_user.username}}</li>
+        <li style="color:blue;padding:15px;">{{current_user.username}}</li>
         <a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
-        <a href="{{url_for('main.profile',uname=current_user.username)}}">Add Pitch</a>
         <a href="{{url_for('auth.logout')}}">Sign out</a>
         {% else %}
         <a href="{{url_for('auth.login')}}">Sign in</a>

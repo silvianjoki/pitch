@@ -10,7 +10,32 @@
 
 
 <div class="container-fluid">
-    <h1 style="text-align: center;color: coral; padding-top: 4%;font-weight: bolder; font-family: 'The Dongle', cursive;">Welcome to Pitchy Pitches!</h1>
+    <h1 style="text-align: center;color: coral; padding-top: 4%;font-weight: bolder; font-family: 'The Dongle', cursive;">Pitchy Pitches!</h1>
+
+    <h4 style="color: cornflowerblue; text-align: center;padding-top: 10%;"> Here you can add new pitches based on something you are interested in within the different categories!</h4>
+    <h5 style="text-align: center; font-family: 'The Nautigal', sans-serif;font-size: xxx-large; color: rgb(5, 61, 63);"> You will also be able to comment and upvote or downvote the pitches</h5>
+    <h6 style="text-align: center; font-family: 'Comforter'; font-size: xxx-large; color:coral;">Welcome</h6>
+
+    <a href="/pitch" style="align-items: center;"  class="new-pitch"><input type="button" style="align-items: center;">Add Pitch</a>
+
+    <!-- <h6 style="text-align: center; font-family: 'Comforter'; font-size: x-large; color:coral;">Add new Pitch here</h6> -->
+</div>
+
+
+<div class="row">
+    {% for pitch in pitches %}
+
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3> {{pitch.title}}</h3>
+                <p>Category: {{pitch.category}}</p>
+                <p>Pitch: {{pitch.pitch_text}}</p>
+                <p><a style="background-color: black; color: white;" href=" {{url_for('main.comment',pitch_id = pitch.id)}} " class="btn btn-primary" role="button">Comment</a></p>
+            </div>
+        </div>
+    </div> {% endfor %}
+
 </div>
 
 {% endblock %}
