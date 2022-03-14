@@ -15,9 +15,9 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(120), index=True, unique=True)  
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
     pass_secure = db.Column(db.String(255))
-    pitches = db.relationship('Pitch',backref = 'pitcher',lazy = "dynamic")
+    comments = db.relationship('Comments', backref='author', lazy='dynamic')
+    pitches = db.relationship('Pitches',backref = 'pitcher',lazy = "dynamic")
 
     def save_user(self):
         db.session.add(self)
@@ -46,14 +46,14 @@ class Pitches(db.Model):
     upvotes = db.Column(db.Integer)
     downvotes = db.Column(db.Integer)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    comments = db.relationship("Comment", backref ='pitch', lazy = "dynamic")
+    comments = db.relationship("Comments", backref ='pitch', lazy = "dynamic")
     
     def save_pitches(self):
             db.session.add(self)
             db.session.commit()
 
     @classmethod
-    def get_pitches(cls,id):
+    def get_pitches(cls,category):
             pitches = Pitches.query.filter_by(category=category).all()
             return pitches
 
@@ -64,9 +64,8 @@ class Comments(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column (db.String())
     pitch_id = db.Column(db.Integer,db.ForeignKey("pitches.id"))
-    
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     # posted = db.Column(db.DateTime,default=datetime.utcnow)
-    
     def save_comments(self):
         db.session.add(self)
         db.session.commit()

@@ -3,15 +3,17 @@ from flask import render_template,request,redirect,url_for,abort
 from . import main
 from flask_login import login_required, current_user, login_user, logout_user
 from ..models import User, Pitches, Comments
-from .forms import PitchesForm, UpdateProfile
+from .forms import CommentForm, PitchesForm, UpdateProfile
 from .. import db,photos
 
 
 @main.route('/')
 def index():
+    pitches = Pitches.query.all()
     
     title= 'Welcome to Pitchy Pitches'
-    return render_template('index.html')
+    return render_template('index.html',  pitches=pitches)
+
 
 @main.route('/home')
 def home():
