@@ -51,7 +51,7 @@ def comment(pitch_id):
         new_comment=Comments(pitch_id=pitch_id, comments=comments, user=user)
         new_comment.save_comments()
         
-        return render_template('comment.html', comment_form=comment_form, pitches=pitches,user_id=current_user._get_current_object().id)
+    return render_template('comment.html', comment_form=comment_form, pitches=pitches,user_id=current_user._get_current_object().id)
 
 
 
