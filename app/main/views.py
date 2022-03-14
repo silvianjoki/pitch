@@ -11,18 +11,13 @@ from .. import db,photos
 def index():
     pitches = Pitches.query.all()
     
-    title= 'Welcome to Pitchy Pitches'
+    # title= 'Welcome to Pitchy Pitches'
     return render_template('index.html', pitches=pitches)
 
-
+# send_from_directory
 # @main.route("/static/<path:path>")
 # def static_dir(path):
 #     return send_from_directory("static", path)
-
-@main.route('/home')
-def home():
-    return render_template('home.html')
-
 
 
 @main.route('/pitch/',methods=['GET','POST'])
@@ -34,9 +29,9 @@ def pitches_form():
         category=pitches_form.category.data
         pitch_content=pitches_form.pitch_content.data
         
-        new_pitches = Pitches(title=title, pitch_content=pitch_content, category=category,user=current_user)
+        new_pitches = Pitches(title=title, pitch_content=pitch_content, category=category,user_id=current_user._get_current_object().id)
         new_pitches.save_pitches()
-        return redirect(url_for('.home',))
+        return redirect(url_for('.index',))
     
     return render_template ('pitch.html', pitches_form=pitches_form)
         
@@ -45,15 +40,16 @@ def pitches_form():
 @main.route('/comment/<int:pitch_id>', methods = ['GET', 'POST'])
 @login_required
 def comment(pitch_id):
-    comment_form = CommentForm()
+    comment_form = CommentForm() 
     pitches=Pitches.query.get(pitch_id)
     comments= Comments.get_comments(pitch_id)
     user = User.query.filter_by(id=id)
     if comment_form.validate_on_submit():
-        comment= comment_form.comment.data
+        comments= comment_form.comment.data
         
-        new_comment=Comments(pitch_id=pitch_id, comments=comments, user=current_user)
+        new_comment=Comments(pitch_id=pitch_id, comments=comments,)
         new_comment.save_comments()
+        
         return render_template('comment.html', comment_form=comment_form, pitches=pitches,user=user)
 
 

@@ -1,4 +1,5 @@
-{% extends 'base.html'%} {% block content %}
+{% extends 'base.html'%} 
+{% block content %}
 <div class="container">
     <div class="row">
         <!-- displaying  individual Username-->
@@ -16,4 +17,8 @@
 
     </div>
 </div>
+
+<!-- pitch = Pitches.query.filter_by(id=current_user.id).all() -->
+<!-- comment=Pitches.query.filter_by(id=current_user.id).all() -->
+
 {% endblock %}

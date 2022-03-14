@@ -15,8 +15,8 @@ class UpdateProfile(FlaskForm):
     
 class PitchesForm(FlaskForm):
     title= StringField('Title:', validators=[InputRequired()])
-    category= SelectField('Category', choices= [('Make a choice','Make a choice'), ('Lifestyle','Lifestyle'), ('Business', 'Business'), ('Technology', 'Technology')], validators=[InputRequired()])
-    pitch_content=TextAreaField('Share your field', validators=[InputRequired()])
+    category= SelectField('Category', choices= [('select','select'), ('Lifestyle','Lifestyle'), ('Business', 'Business'), ('Technology', 'Technology')], validators=[InputRequired()])
+    pitch_content=TextAreaField('Share your pitch', validators=[InputRequired()])
     submit= SubmitField('Submit')
     
     

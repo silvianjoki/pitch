@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Pitch</a> 
+        <a class="navbar-brand" href="/">Pitchy Pitches</a> 
         {% if current_user.is_authenticated %}
         <li style="color:blue;padding:15px;">{{current_user.username}}</li>
         <a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>

@@ -1,3 +1,17 @@
 body{
-    background-image: url(app/static/photos/kelly.jpg);
+    /* background-image: url(app/static/photos/kelly.jpg); */
+    background-color:rgba(53, 68, 53, 0.151);
+}
+
+
+
+/* .button, input, optgroup, select, textarea  */
+.new-pitch{
+    color: black;
+    font-weight: bolder;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    align-items: center;
 }

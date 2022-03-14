@@ -1,6 +1,9 @@
-{% extends 'base.html'%} {% import 'bootstrap/wtf.html' as wtf %} {% block content%}
+{% extends 'base.html'%} 
+{% import 'bootstrap/wtf.html' as wtf %} 
+{% block content%}
 <div class="container-fluid">
-    {{user.username}} {{pitches.pitches}}{% if comments %}
+    {{user.username}} {{pitches.pitches}}
+    {% if comments %}
     <div class="row">
         <div class="col-sm-8">
             {{wtf.quick_form(comment_form)}}
@@ -18,7 +21,7 @@
 
                 </div>
             </div>
-            {% endfor%}
+            {% endfor %}
 
         </div>
         {%else%}
