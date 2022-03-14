@@ -10,8 +10,9 @@ from .. import db,photos
 @main.route('/')
 def index():
     pitches = Pitches.query.all()
+    comments = Comments.query.all()
     
-    return render_template('index.html', pitches=pitches)
+    return render_template('index.html', pitches=pitches, comments=comments)
 
 
 
@@ -38,6 +39,8 @@ def pitches_form():
 @main.route('/comment/<int:pitch_id>', methods = ['GET', 'POST'])
 @login_required
 def comment(pitch_id):
+    
+    
     comment_form = CommentForm() 
     pitches=Pitches.query.get(pitch_id)
     comments= Comments.get_comments(pitch_id)
@@ -45,10 +48,10 @@ def comment(pitch_id):
     if comment_form.validate_on_submit():
         comments= comment_form.comment.data
         
-        new_comment=Comments(pitch_id=pitch_id, comments=comments,)
+        new_comment=Comments(pitch_id=pitch_id, comments=comments, user=user)
         new_comment.save_comments()
         
-        return render_template('comment.html', comment_form=comment_form, pitches=pitches,user=user)
+        return render_template('comment.html', comment_form=comment_form, pitches=pitches,user_id=current_user._get_current_object().id)
 
 
 

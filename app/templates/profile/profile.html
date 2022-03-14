@@ -17,13 +17,13 @@
             {% endif %}
         </div>
     </div>
-    { for pitchz of pitch }
+    {% for pitch in pitches %}
     <h1> {{pitchz.category}} </h1>
     <h2> {{pitchz.title}} </h2>
     <p> {{pitchz.content}} </p>
     <a href="/comment"><input type="button" value="create new comment"></a>
     <!-- <a href="/comment"><input type="button" value="create new comment"></a> -->
-
+    {% endfor %}
 </div>
 
 <!-- pitch = Pitches.query.filter_by(id=current_user.id).all() -->
