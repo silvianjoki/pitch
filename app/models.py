@@ -43,14 +43,22 @@ class Pitches(db.Model):
     title = db.Column(db.String())
     category = db.Column(db.String())
     pitch_content = db.Column(db.String())
-    upvotes = db.Column(db.Integer)
-    downvotes = db.Column(db.Integer)
+    upvotes = db.Column(db.Boolean, nullable=False)
+    downvotes = db.Column(db.Boolean, nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
     comments = db.relationship("Comments", backref ='pitch', lazy = "dynamic")
     
     def save_pitches(self):
             db.session.add(self)
             db.session.commit()
+            
+    def __repr__(self):
+        if self.upvote == True:
+            vote = 'Up'
+        else:
+            vote = 'Down'
+        return '<Vote - {}, from {} for {}>'.format(vote, self.user.username, self.post.header)
+
 
     @classmethod
     def get_pitches(cls,category):
@@ -75,6 +83,10 @@ class Comments(db.Model):
         comments = Comments.query.filter_by(pitch_id=pitch_id).all()
         return comments
     
+
+
+
+
 
 
 

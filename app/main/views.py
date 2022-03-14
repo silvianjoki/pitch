@@ -11,13 +11,9 @@ from .. import db,photos
 def index():
     pitches = Pitches.query.all()
     
-    # title= 'Welcome to Pitchy Pitches'
     return render_template('index.html', pitches=pitches)
 
-# send_from_directory
-# @main.route("/static/<path:path>")
-# def static_dir(path):
-#     return send_from_directory("static", path)
+
 
 
 @main.route('/pitch/',methods=['GET','POST'])
@@ -32,6 +28,8 @@ def pitches_form():
         new_pitches = Pitches(title=title, pitch_content=pitch_content, category=category,user_id=current_user._get_current_object().id)
         new_pitches.save_pitches()
         return redirect(url_for('.index',))
+    
+    
     
     return render_template ('pitch.html', pitches_form=pitches_form)
         

@@ -11,11 +11,19 @@
             <p style="align-content: center; font-family: 'The Dongle';"> {{user.bio}}</p>
             {%else%}
             <p> {{user.username| capitalize}} You have no bio</p>
-            {% endif %} {% if user == current_user %}
-            <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit bio</a> {% endif %}
+            {% endif %} 
+            {% if user == current_user %}
+            <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit bio</a>
+            {% endif %}
         </div>
-
     </div>
+    { for pitchz of pitch }
+    <h1> {{pitchz.category}} </h1>
+    <h2> {{pitchz.title}} </h2>
+    <p> {{pitchz.content}} </p>
+    <a href="/comment"><input type="button" value="create new comment"></a>
+    <!-- <a href="/comment"><input type="button" value="create new comment"></a> -->
+
 </div>
 
 <!-- pitch = Pitches.query.filter_by(id=current_user.id).all() -->
