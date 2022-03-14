@@ -1,7 +1,7 @@
 {% extends 'base.html'%} {% block content %}
 <div class="container">
     <div class="row">
-        <!-- displaying  Username-->
+        <!-- displaying  individual Username-->
         <div class="col-md-4">
             <h3> {{user.username| capitalize}} </h3>
 
@@ -11,7 +11,7 @@
             {%else%}
             <p> {{user.username| capitalize}} You have no bio</p>
             {% endif %} {% if user == current_user %}
-            <a href="{{url_for('main.update_profile',uname=user.username)}}">Add bio</a> {% endif %}
+            <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit bio</a> {% endif %}
         </div>
 
     </div>

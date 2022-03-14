@@ -2,6 +2,7 @@
 
 <ul class="nav navbar-nav navbar-right">
 
+    <li><a href="/pitch">Pitch</a></li>
     {% if current_user.is_authenticated %}
     <li style="color:white;padding:15px;">{{current_user.username}}</li>
     <li><a href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>

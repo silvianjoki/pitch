@@ -12,8 +12,12 @@ def index():
     pitches = Pitches.query.all()
     
     title= 'Welcome to Pitchy Pitches'
-    return render_template('index.html',  pitches=pitches)
+    return render_template('index.html', pitches=pitches)
 
+
+# @main.route("/static/<path:path>")
+# def static_dir(path):
+#     return send_from_directory("static", path)
 
 @main.route('/home')
 def home():
