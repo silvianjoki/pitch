@@ -42,4 +42,4 @@ To run the application run the following commands:
 For further information or inquiry reach out to silvia.kamau@student.moringaschool.com
 
 ## License 
-Project is licensed under MIT
+Project is licensed under MIT# blog
